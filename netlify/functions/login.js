@@ -1,20 +1,17 @@
 const bcrypt = require("bcryptjs");
-const fs = require("fs");
-const path = require("path");
+const { getStore } = require("@netlify/blobs");
 
-const USERS_FILE = path.join("/tmp", "users.json");
+const STORE_NAME = "songbird-users";
+const USERS_KEY = "users";
 
-function readUsers() {
+async function readUsers(store) {
   try {
-    if (fs.existsSync(USERS_FILE)) {
-      const raw = fs.readFileSync(USERS_FILE, "utf8");
-      const data = JSON.parse(raw);
-      return Array.isArray(data) ? data : [];
-    }
+    const data = await store.get(USERS_KEY, { type: "json" });
+    return Array.isArray(data) ? data : [];
   } catch (e) {
     console.error("readUsers", e);
+    return [];
   }
-  return [];
 }
 
 function jsonResponse(statusCode, data) {
@@ -38,6 +35,7 @@ exports.handler = async (event) => {
   }
 
   try {
+    const store = getStore(STORE_NAME);
     const body = typeof event.body === "string" ? JSON.parse(event.body) : event.body || {};
     const { email, password } = body;
     const trimmedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
@@ -47,7 +45,7 @@ exports.handler = async (event) => {
       return jsonResponse(400, { error: "Email and password are required." });
     }
 
-    const users = readUsers();
+    const users = await readUsers(store);
     const user = users.find((u) => u.email === trimmedEmail);
     if (!user || !user.passwordHash) {
       return jsonResponse(401, { error: "Invalid email or password." });

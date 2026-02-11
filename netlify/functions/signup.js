@@ -1,24 +1,21 @@
 const bcrypt = require("bcryptjs");
-const fs = require("fs");
-const path = require("path");
+const { getStore } = require("@netlify/blobs");
 
-const USERS_FILE = path.join("/tmp", "users.json");
+const STORE_NAME = "songbird-users";
+const USERS_KEY = "users";
 
-function readUsers() {
+async function readUsers(store) {
   try {
-    if (fs.existsSync(USERS_FILE)) {
-      const raw = fs.readFileSync(USERS_FILE, "utf8");
-      const data = JSON.parse(raw);
-      return Array.isArray(data) ? data : [];
-    }
+    const data = await store.get(USERS_KEY, { type: "json" });
+    return Array.isArray(data) ? data : [];
   } catch (e) {
     console.error("readUsers", e);
+    return [];
   }
-  return [];
 }
 
-function writeUsers(users) {
-  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), "utf8");
+async function writeUsers(store, users) {
+  await store.setJSON(USERS_KEY, users);
 }
 
 function jsonResponse(statusCode, data) {
@@ -42,6 +39,7 @@ exports.handler = async (event) => {
   }
 
   try {
+    const store = getStore(STORE_NAME);
     const body = typeof event.body === "string" ? JSON.parse(event.body) : event.body || {};
     const { email, password, name } = body;
     const trimmedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
@@ -55,7 +53,7 @@ exports.handler = async (event) => {
       return jsonResponse(400, { error: "Password must be at least 8 characters." });
     }
 
-    const users = readUsers();
+    const users = await readUsers(store);
     if (users.some((u) => u.email === trimmedEmail)) {
       return jsonResponse(409, { error: "An account with this email already exists." });
     }
@@ -69,7 +67,7 @@ exports.handler = async (event) => {
       createdAt: new Date().toISOString(),
     };
     users.push(user);
-    writeUsers(users);
+    await writeUsers(store, users);
 
     return jsonResponse(201, {
       id: user.id,

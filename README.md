@@ -2,6 +2,8 @@
 
 Generate song lyrics from a topic or emotion. Sign up, log in, and save favorites.
 
+**What the app does:** Songbird is a web app that uses AI to write song lyrics. You enter a topic or emotion (e.g. “bittersweet breakup” or “summer road trip”), pick a genre and optional mood, and the app generates full lyrics (verses, chorus, bridge). You must create an account and log in to save lyrics to your favorites; favorites are stored per user in the browser. You can export any generated lyrics as a `.txt` file. The front end is static HTML/CSS/JS; the backend can run as an Express server or as Netlify serverless functions, and lyric generation is powered by the OpenAI API.
+
 ## Deploy on Netlify
 
 1. **Push your repo to GitHub** (or GitLab/Bitbucket).
@@ -17,7 +19,7 @@ Generate song lyrics from a topic or emotion. Sign up, log in, and save favorite
 
 4. **Redeploy** after adding env vars so the functions pick them up.
 
-**Note:** On Netlify, signup/login user data is stored in serverless `/tmp` and is **ephemeral** (can be lost between requests). For persistent accounts, add a database (e.g. Netlify Identity, Supabase, or another provider) and update the `netlify/functions/signup.js` and `login.js` logic.
+User accounts are stored persistently using **Netlify Blobs** (store name: `songbird-users`), so signups and logins work across visits and deploys.
 
 ### Local dev with Netlify
 
