@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign up · Songbird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body class="auth-page">
+  <div class="auth-root">
+    <header class="auth-header">
+      <a href="index.html" class="auth-logo">Songbird</a>
+      <p>Create an account to save your lyrics across devices.</p>
+    </header>
+
+    <main class="auth-main">
+      <section class="card auth-card">
+        <div class="card-body">
+          <h2 class="auth-title">Sign up</h2>
+
+          <form id="signup-form" class="auth-form" novalidate>
+            <div class="field-group">
+              <label for="signup-name">Display name</label>
+              <input
+                type="text"
+                id="signup-name"
+                name="name"
+                placeholder="How we'll call you"
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="field-group">
+              <label for="signup-email">Email</label>
+              <input
+                type="email"
+                id="signup-email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+              />
+              <span id="signup-email-error" class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field-group">
+              <label for="signup-password">Password</label>
+              <input
+                type="password"
+                id="signup-password"
+                name="password"
+                placeholder="At least 8 characters"
+                autocomplete="new-password"
+                required
+                minlength="8"
+              />
+              <span id="signup-password-error" class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field-group">
+              <label for="signup-confirm">Confirm password</label>
+              <input
+                type="password"
+                id="signup-confirm"
+                name="confirm"
+                placeholder="Same as above"
+                autocomplete="new-password"
+                required
+              />
+              <span id="signup-confirm-error" class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div id="signup-form-error" class="form-error" aria-live="polite"></div>
+
+            <div class="auth-actions">
+              <button type="submit" id="signup-submit" class="btn primary btn-full">
+                Create account
+              </button>
+              <p class="auth-switch">
+                Already have an account? <a href="login.html">Log in</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="auth-footer">
+      <a href="index.html">← Back to Songbird</a>
+    </footer>
+  </div>
+
+  <script src="./signup.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in · Songbird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body class="auth-page">
+  <div class="auth-root">
+    <header class="auth-header">
+      <a href="index.html" class="auth-logo">Songbird</a>
+      <p>Log in to save your lyrics to favorites.</p>
+    </header>
+
+    <main class="auth-main">
+      <section class="card auth-card">
+        <div class="card-body">
+          <h2 class="auth-title">Log in</h2>
+
+          <form id="login-form" class="auth-form" novalidate>
+            <div class="field-group">
+              <label for="login-email">Email</label>
+              <input
+                type="email"
+                id="login-email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+              />
+              <span id="login-email-error" class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field-group">
+              <label for="login-password">Password</label>
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                placeholder="Your password"
+                autocomplete="current-password"
+                required
+              />
+              <span id="login-password-error" class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div id="login-form-error" class="form-error" aria-live="polite"></div>
+
+            <div class="auth-actions">
+              <button type="submit" id="login-submit" class="btn primary btn-full">
+                Log in
+              </button>
+              <p class="auth-switch">
+                Don't have an account? <a href="signup.html">Sign up</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="auth-footer">
+      <a href="index.html">← Back to Songbird</a>
+    </footer>
+  </div>
+
+  <script src="./login.js" defer></script>
+</body>
+
+</html>

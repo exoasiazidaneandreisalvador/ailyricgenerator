@@ -1,0 +1,22 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Rewrite /api/* to Netlify Functions so frontend can use relative /api/... URLs
+[[redirects]]
+  from = "/api/signup"
+  to = "/.netlify/functions/signup"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/login"
+  to = "/.netlify/functions/login"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/generate-lyrics"
+  to = "/.netlify/functions/generate-lyrics"
+  status = 200
+  force = true
