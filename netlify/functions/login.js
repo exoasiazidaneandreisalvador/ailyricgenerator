@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const { getStore } = require("@netlify/blobs");
+const { connectLambda, getStore } = require("@netlify/blobs");
 
 const STORE_NAME = "songbird-users";
 const USERS_KEY = "users";
@@ -35,6 +35,7 @@ exports.handler = async (event) => {
   }
 
   try {
+    connectLambda(event);
     const store = getStore(STORE_NAME);
     const body = typeof event.body === "string" ? JSON.parse(event.body) : event.body || {};
     const { email, password } = body;
